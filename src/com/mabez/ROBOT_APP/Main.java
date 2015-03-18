@@ -20,5 +20,6 @@ public class Main extends Activity {
         Title = (TextView) findViewById(R.id.TitleText);
         JimmyStart = (ImageButton) findViewById(R.id.JimmyStartButton);
         JimmyStart.setImageResource(R.drawable.ic_launcher);
+        //find
     }
 }
