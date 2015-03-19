@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:weightSum="1"
+    style="@style/BG_THEME">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <TextView
+            style="@style/DefaultApptext"
+            android:id="@+id/forward"
+            android:text="@string/forward">
+        </TextView>
+        <TextView
+            style="@style/DefaultApptext"
+            android:id="@+id/left"
+            android:text="@string/right">
+        </TextView>
+        <TextView
+            style="@style/DefaultApptext"
+            android:id="@+id/right"
+            android:text="@string/left">
+        </TextView>
+
+
+    </LinearLayout>
+
+    <ListView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/CodeArea"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        />
+</LinearLayout>

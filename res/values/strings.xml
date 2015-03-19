@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ROBOT_APP</string>
+    <string name="app_name">Jimmy The Robot</string>
+    <string name="forward">Forward</string>
+    <string name="right">Right</string>
+    <string name="left">Left</string>
 </resources>
