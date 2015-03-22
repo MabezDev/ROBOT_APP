@@ -1,7 +1,9 @@
 package com.mabez.ROBOT_APP;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,9 +21,10 @@ public class ProgramScreen extends Activity {
 
     private TextView forward,right,left,loop;
     private ListView CodeArea;
-    private ArrayAdapter<String> myAdapter;
-    private ArrayList<String> Code = new ArrayList<String>();
+    private static ArrayAdapter<String> myAdapter;
+    private static ArrayList<String> Code = new ArrayList<String>();
     private View.OnDragListener myDrag;
+    private static ArrayList<View> Items;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -33,6 +36,7 @@ public class ProgramScreen extends Activity {
         CodeArea = (ListView) findViewById(R.id.CodeArea);
 
         Code = new ArrayList<String>();
+        Items = new ArrayList<View>();
 
 
         myAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,Code);
@@ -43,11 +47,34 @@ public class ProgramScreen extends Activity {
 
     private void Setup(){//needs work
 
-        Code.add("Papipls");
-        myAdapter.notifyDataSetChanged();
+
+
         /*
         deletion on tap
         */
+        CodeArea.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String toDelete = myAdapter.getItem(position);
+                myAdapter.remove(toDelete);
+                myAdapter.notifyDataSetChanged();
+            }
+        });
+
+        CodeArea.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String toDelete = myAdapter.getItem(position);
+                myAdapter.remove(toDelete);
+                myAdapter.notifyDataSetChanged();
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+                view.startDrag(data, shadowBuilder, view, 0);
+                return true;
+            }
+        });
+
+
 
         /*
         set drag listener on text views
@@ -58,14 +85,28 @@ public class ProgramScreen extends Activity {
 
 
         CodeArea.setOnDragListener(new ChoiceDrag());
-
-
-
     }
 
-    protected void addCommand(String command){
-        myAdapter.add(command);
+    private void setChildOnDrag(){
+        if(Items != null){
+            Items.clear();
+        }
+
+        for(int i = 0;i<Code.size();i++){
+            Items.add(CodeArea.getChildAt(i));
+        }
+
+        for(View Item: Items){
+            Item.setOnTouchListener(new ChoiceTouch());
+        }
+    }
+
+    public void addCommand(String command,int position){
+        System.out.println("Got From Sub Class: "+command);
+        myAdapter.insert(command,position);
         myAdapter.notifyDataSetChanged();
+
+
     }
 
 }

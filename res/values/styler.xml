@@ -11,6 +11,8 @@
         <item name="android:shadowRadius">20</item>
         <item name = "android:paddingBottom">40sp</item>
         <item name = "android:paddingTop">70sp</item>
+        <item name = "android:paddingLeft">40sp</item>
+        <item name = "android:paddingRight">40sp</item>
 
     </style>
 

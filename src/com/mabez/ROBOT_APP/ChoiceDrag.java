@@ -13,7 +13,11 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
     public boolean onDrag(View v, DragEvent event) {
         View Current = (View) event.getLocalState();
         TextView Stringed = (TextView) Current;
-        String Texted = Stringed.toString();
+
+
+        String Texted = Stringed.getText().toString();
+       //need to get dropped psoiton and add to "addCommand"
+
 
         switch(event.getAction()){
             case DragEvent.ACTION_DRAG_STARTED:
@@ -27,16 +31,21 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
                 Current.setVisibility(View.VISIBLE);
                 break;
             case DragEvent.ACTION_DROP:
-                addCommand(Texted);
+
+                System.out.println("Printing: "+Texted);
+                addCommand(Texted,0);//HERE ADD POSITION ONCE FOUND
+                break;
+            default:
+                break;
 
 
         }
-        return false;
+        return true;
     }
     @Override
-    protected void addCommand(String command){
+    public void addCommand(String command, int position){
         System.out.println("Printing form child");
-        super.addCommand(command);
+        super.addCommand(command,position);
     }
 
 }
