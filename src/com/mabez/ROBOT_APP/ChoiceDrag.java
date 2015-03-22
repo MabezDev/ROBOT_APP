@@ -13,6 +13,7 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
     public boolean onDrag(View v, DragEvent event) {
         View Current = (View) event.getLocalState();
         TextView Stringed = (TextView) Current;
+        int position = 0;
 
 
         String Texted = Stringed.getText().toString();
@@ -31,9 +32,12 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
                 Current.setVisibility(View.VISIBLE);
                 break;
             case DragEvent.ACTION_DROP:
+                 View now = (View) event.getLocalState();
+                int x = (int)now.getX();
+                int y = (int)now.getY();
 
                 System.out.println("Printing: "+Texted);
-                addCommand(Texted,0);//HERE ADD POSITION ONCE FOUND
+                addCommand(Texted,x,y);//HERE ADD POSITION ONCE FOUND
                 break;
             default:
                 break;
@@ -43,9 +47,9 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
         return true;
     }
     @Override
-    public void addCommand(String command, int position){
+    public void addCommand(String command,int x,int y){
         System.out.println("Printing form child: ");
-        super.addCommand(command,position);
+        super.addCommand(command,x,y);
     }
 
 }

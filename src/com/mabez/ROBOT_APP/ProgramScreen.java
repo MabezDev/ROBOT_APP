@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class ProgramScreen extends Activity {
 
     private TextView forward,right,left,loop;
-    private ListView CodeArea;
+    private static ListView CodeArea;
     private static ArrayAdapter<String> myAdapter;
     private static ArrayList<String> Code = new ArrayList<String>();
     private View.OnDragListener myDrag;
@@ -85,6 +85,12 @@ public class ProgramScreen extends Activity {
 
 
         CodeArea.setOnDragListener(new ChoiceDrag());
+
+        for(int i = 0;i<10;i++){//used to add code slots so each thing can be addressed
+            myAdapter.add("");
+            myAdapter.notifyDataSetChanged();
+        }
+        //setChildOnDrag();
     }
 
     private void setChildOnDrag(){
@@ -96,14 +102,19 @@ public class ProgramScreen extends Activity {
             Items.add(CodeArea.getChildAt(i));
         }
 
-        for(View Item: Items){
-            Item.setOnTouchListener(new ChoiceTouch());
-        }
+        /*for(int j = 0;j <Items.size();j++){
+            Items.get(j).setOnTouchListener(new ChoiceTouch());
+            Items.get(j).setOnDragListener(new ChoiceDrag());
+            //Items.get(j).setTag(Integer.valueOf(j));
+        }*/
     }
 
-    public void addCommand(String command,int position){
+    public void addCommand(String command,int x,int y){//almost at rearragingin point still buggy
         System.out.println("Got From Sub Class: "+command);
-        myAdapter.insert(command,position);
+
+        int position = CodeArea.pointToPosition(x,y);
+        System.out.println(position);
+        myAdapter.insert(command,position);//change to position of dropped item
         myAdapter.notifyDataSetChanged();
 
 
