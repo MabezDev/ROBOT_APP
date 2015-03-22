@@ -44,7 +44,7 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
     }
     @Override
     public void addCommand(String command, int position){
-        System.out.println("Printing form child");
+        System.out.println("Printing form child: ");
         super.addCommand(command,position);
     }
 
