@@ -26,6 +26,8 @@ public class ProgramScreen extends Activity {
     private View.OnDragListener myDrag;
     private static ArrayList<View> Items;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -57,6 +59,7 @@ public class ProgramScreen extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String toDelete = myAdapter.getItem(position);
                 myAdapter.remove(toDelete);
+                myAdapter.add("");
                 myAdapter.notifyDataSetChanged();
             }
         });
@@ -65,9 +68,12 @@ public class ProgramScreen extends Activity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String toDelete = myAdapter.getItem(position);
+                ClipData data = ClipData.newPlainText(toDelete,"");
+                System.out.println("DRAGGED VIEW ID: "+toDelete);
                 myAdapter.remove(toDelete);
+                myAdapter.add("");
                 myAdapter.notifyDataSetChanged();
-                ClipData data = ClipData.newPlainText("", "");
+
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
                 return true;
@@ -90,24 +96,9 @@ public class ProgramScreen extends Activity {
             myAdapter.add("");
             myAdapter.notifyDataSetChanged();
         }
-        //setChildOnDrag();
+
     }
 
-    private void setChildOnDrag(){
-        if(Items != null){
-            Items.clear();
-        }
-
-        for(int i = 0;i<Code.size();i++){
-            Items.add(CodeArea.getChildAt(i));
-        }
-
-        /*for(int j = 0;j <Items.size();j++){
-            Items.get(j).setOnTouchListener(new ChoiceTouch());
-            Items.get(j).setOnDragListener(new ChoiceDrag());
-            //Items.get(j).setTag(Integer.valueOf(j));
-        }*/
-    }
 
     public void addCommand(String command,int x,int y){//almost at rearragingin point still buggy
         System.out.println("Got X:"+x);//WHY IS THIS ZERO NO MATTER WHAT
@@ -122,5 +113,7 @@ public class ProgramScreen extends Activity {
 
 
     }
+
+
 
 }

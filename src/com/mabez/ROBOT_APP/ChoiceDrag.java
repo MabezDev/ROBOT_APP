@@ -1,5 +1,6 @@
 package com.mabez.ROBOT_APP;
 
+import android.content.ClipData;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -12,15 +13,15 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
     private int finalposition;
     private int x;
     private int y;
+    private String command;
 
     @Override
     public boolean onDrag(View v, DragEvent event) {
         View Current = (View) event.getLocalState();
         TextView Stringed = (TextView) Current;
         int position = 0;
+        command = "";
 
-
-        String Texted = Stringed.getText().toString();
        //need to get dropped psoiton and add to "addCommand"
 
 
@@ -33,15 +34,23 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
             case DragEvent.ACTION_DRAG_EXITED:
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
-                System.out.print("end");
+
 
                 Current.setVisibility(View.VISIBLE);
                 break;
             case DragEvent.ACTION_DROP:
-                System.out.println("DROp");
+                System.out.println("DROP");
+                System.out.println(event.getY());
+                System.out.println(event.getX());
+
+                command = event.getClipData().getDescription().getLabel().toString();
+                System.out.println("ChoiceDrag Recieved: "+command);
+                this.x = (int)event.getX();
+                this.y = (int)event.getY();
 
 
-                addCommand(Texted,x,y);//HERE ADD POSITION ONCE FOUND
+                addCommand(command,x,y);//HOLYSHIT IT WORKS
+
                 break;
             default:
                 break;
@@ -50,18 +59,13 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
         }
         return true;
     }
+
+
     @Override
     public void addCommand(String command,int x,int y){
 
         super.addCommand(command,this.x,this.y);
     }
 
-    protected void setPosition(int x,int y){//USELESS ATM
-
-        this.x = x;
-        this.y = y;
-        System.out.println("X in parent: "+this.x);
-        System.out.println("Y in parent: "+this.y);
-    }
 
 }
