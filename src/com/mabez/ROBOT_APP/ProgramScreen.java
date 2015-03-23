@@ -65,9 +65,7 @@ public class ProgramScreen extends Activity {
         CodeArea.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String toDelete = myAdapter.getItem(position);
-                myAdapter.remove(toDelete);
-                myAdapter.add("");//keep buffer
+                Code.set(position,"");
                 myAdapter.notifyDataSetChanged();
             }
         });
@@ -79,16 +77,29 @@ public class ProgramScreen extends Activity {
         CodeArea.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                myAdapter.add("");//keep buffer
+
+
                 String toDelete = myAdapter.getItem(position);
-                ClipData data = ClipData.newPlainText(toDelete,Integer.toString(position));//main text, then original position
-                System.out.println("DRAGGED VIEW ID: "+toDelete);
-                myAdapter.remove(toDelete);
+                ClipData data = ClipData.newPlainText(toDelete, Integer.toString(position));//main text, then original position
+
+                myAdapter.insert("", position);
+                Code.remove(position + 1);
 
                 myAdapter.notifyDataSetChanged();
 
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-                view.startDrag(data, shadowBuilder, view, 0);
+                View toFind = null;
+                if(toDelete.equals("Forward")){
+                    toFind = forward;
+                }
+                if(toDelete.equals("Right")){
+                    toFind = left;
+                }
+                if(toDelete.equals("Left")){
+                    toFind = right;
+                }
+
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(toFind);
+                view.startDrag(data, shadowBuilder, toFind, 0);
                 return true;
             }
         });
@@ -134,6 +145,7 @@ public class ProgramScreen extends Activity {
 
         if(position!=-1) {//for some reason returning -1 if you pick an item up and put it back in the same place
             Code.set(position, command);
+            myAdapter.add("");
             myAdapter.notifyDataSetChanged();
         } else {
             Code.set(origInt, command);
@@ -143,6 +155,7 @@ public class ProgramScreen extends Activity {
 
 
     }
+
 
 
 

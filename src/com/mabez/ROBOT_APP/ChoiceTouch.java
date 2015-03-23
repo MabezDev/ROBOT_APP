@@ -12,12 +12,21 @@ import android.widget.TextView;
  *
  */
 public class ChoiceTouch extends ChoiceDrag implements View.OnTouchListener{
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+
+
+
+
+
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             TextView t = (TextView) v;
             String id1 = t.getText().toString();
+
+
+
 
             ClipData data = ClipData.newPlainText(id1,null);
             View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);

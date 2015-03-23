@@ -29,14 +29,14 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
 
         switch(event.getAction()){
             case DragEvent.ACTION_DRAG_STARTED:
-                Current.setVisibility(View.INVISIBLE);
+
                 break;
             case DragEvent.ACTION_DRAG_ENTERED:
                 break;
             case DragEvent.ACTION_DRAG_EXITED:
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
-                Current.setVisibility(View.VISIBLE);
+
                 break;
             case DragEvent.ACTION_DROP:
                 command = event.getClipData().getDescription().getLabel().toString();
