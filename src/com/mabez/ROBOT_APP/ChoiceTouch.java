@@ -7,7 +7,7 @@ import android.view.View;
 /**
  * Created by Scott on 19/03/2015.
  */
-public class ChoiceTouch implements View.OnTouchListener {
+public class ChoiceTouch extends ChoiceDrag implements View.OnTouchListener{
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
@@ -17,9 +17,16 @@ public class ChoiceTouch implements View.OnTouchListener {
             v.startDrag(data, shadowBuilder, v, 0);
             return true;
         }
-        else {
-            return false;
-        }
+        //System.out.println("DROPPED COORD:"+(int)event.getX()+","+(int)event.getY());
+        setPosition((int)event.getX(),(int)event.getY());
+        return false;
 
     }
+
+    @Override//USELESS ATM
+    protected void setPosition(int x,int y){
+        super.setPosition(x,y);
+    }
+
+
 }

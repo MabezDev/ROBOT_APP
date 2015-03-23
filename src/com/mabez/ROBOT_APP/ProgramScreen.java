@@ -110,11 +110,14 @@ public class ProgramScreen extends Activity {
     }
 
     public void addCommand(String command,int x,int y){//almost at rearragingin point still buggy
+        System.out.println("Got X:"+x);//WHY IS THIS ZERO NO MATTER WHAT
+        System.out.println("Got Y:"+y);
         System.out.println("Got From Sub Class: "+command);
 
         int position = CodeArea.pointToPosition(x,y);
-        System.out.println(position);
-        myAdapter.insert(command,position);//change to position of dropped item
+
+        System.out.println("Dragged to: "+(position+1));
+        Code.set(position, command);//change to position of dropped item
         myAdapter.notifyDataSetChanged();
 
 

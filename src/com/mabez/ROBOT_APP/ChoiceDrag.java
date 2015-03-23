@@ -9,6 +9,10 @@ import android.widget.TextView;
  */
 public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
 
+    private int finalposition;
+    private int x;
+    private int y;
+
     @Override
     public boolean onDrag(View v, DragEvent event) {
         View Current = (View) event.getLocalState();
@@ -29,14 +33,14 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
             case DragEvent.ACTION_DRAG_EXITED:
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
+                System.out.print("end");
+
                 Current.setVisibility(View.VISIBLE);
                 break;
             case DragEvent.ACTION_DROP:
-                 View now = (View) event.getLocalState();
-                int x = (int)now.getX();
-                int y = (int)now.getY();
+                System.out.println("DROp");
 
-                System.out.println("Printing: "+Texted);
+
                 addCommand(Texted,x,y);//HERE ADD POSITION ONCE FOUND
                 break;
             default:
@@ -48,8 +52,16 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
     }
     @Override
     public void addCommand(String command,int x,int y){
-        System.out.println("Printing form child: ");
-        super.addCommand(command,x,y);
+
+        super.addCommand(command,this.x,this.y);
+    }
+
+    protected void setPosition(int x,int y){//USELESS ATM
+
+        this.x = x;
+        this.y = y;
+        System.out.println("X in parent: "+this.x);
+        System.out.println("Y in parent: "+this.y);
     }
 
 }
