@@ -16,6 +16,7 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
     private int x;
     private int y;
     private String command;
+    private int originalPosition;
 
     @Override
     public boolean onDrag(View v, DragEvent event) {
@@ -39,12 +40,19 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
                 break;
             case DragEvent.ACTION_DROP:
                 command = event.getClipData().getDescription().getLabel().toString();
+                String original = (String)event.getClipData().getItemAt(0).getText();
+                if(original!=null){
+                    originalPosition = Integer.valueOf(original);
+                    System.out.println("Original Position: "+originalPosition);
+                }
+
+                System.out.println("Position"+original);
                 System.out.println("Choice Drag Received: "+command);
 
                 this.x = (int)event.getX();
                 this.y = (int)event.getY();
 
-                addCommand(command,x,y);//HOLY SHIT IT WORKS
+                addCommand(command,x,y,originalPosition);//HOLY SHIT IT WORKS
                 break;
             default:
                 break;
@@ -56,9 +64,9 @@ public class ChoiceDrag extends ProgramScreen implements View.OnDragListener {
 
 
     @Override
-    public void addCommand(String command,int x,int y){
+    public void addCommand(String command,int x,int y,int orig){
 
-        super.addCommand(command,this.x,this.y);
+        super.addCommand(command,x,y,orig);
     }
 
 

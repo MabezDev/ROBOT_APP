@@ -19,7 +19,7 @@ public class ChoiceTouch extends ChoiceDrag implements View.OnTouchListener{
             TextView t = (TextView) v;
             String id1 = t.getText().toString();
 
-            ClipData data = ClipData.newPlainText(id1,"");
+            ClipData data = ClipData.newPlainText(id1,null);
             View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
             v.startDrag(data, shadowBuilder, v, 0);
             return true;

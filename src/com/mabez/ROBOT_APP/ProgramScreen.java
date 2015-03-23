@@ -79,11 +79,12 @@ public class ProgramScreen extends Activity {
         CodeArea.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                myAdapter.add("");//keep buffer
                 String toDelete = myAdapter.getItem(position);
-                ClipData data = ClipData.newPlainText(toDelete,"");
+                ClipData data = ClipData.newPlainText(toDelete,Integer.toString(position));//main text, then original position
                 System.out.println("DRAGGED VIEW ID: "+toDelete);
                 myAdapter.remove(toDelete);
-                myAdapter.add("");//keep buffer
+
                 myAdapter.notifyDataSetChanged();
 
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
@@ -121,7 +122,7 @@ public class ProgramScreen extends Activity {
     Handles adding and rearranging Items to CodeArea(ListView)
      */
 
-    public void addCommand(String command,int x,int y){
+    public void addCommand(String command,int x,int y, int origInt){
         System.out.println("Got X:"+x);
         System.out.println("Got Y:"+y);
         System.out.println("Got From Sub Class: "+command);
@@ -130,8 +131,15 @@ public class ProgramScreen extends Activity {
 
         System.out.println("Dragged to: "+(position+1));
 
-        Code.set(position, command);
-        myAdapter.notifyDataSetChanged();
+
+        if(position!=-1) {//for some reason returning -1 if you pick an item up and put it back in the same place
+            Code.set(position, command);
+            myAdapter.notifyDataSetChanged();
+        } else {
+            Code.set(origInt, command);
+            myAdapter.notifyDataSetChanged();
+
+        }
 
 
     }
