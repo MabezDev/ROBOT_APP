@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 /**
  * Created by Scott on 19/03/2015.
+ *
+ *Custom TouchListener That starts a drag event
+ *
  */
 public class ChoiceTouch extends ChoiceDrag implements View.OnTouchListener{
     @Override

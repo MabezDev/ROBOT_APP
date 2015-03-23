@@ -16,6 +16,9 @@ import java.util.ArrayList;
 
 /**
  * Created by Scott on 19/03/2015.
+ *
+ * Main Programming Screen
+ *
  */
 public class ProgramScreen extends Activity {
 
@@ -32,6 +35,11 @@ public class ProgramScreen extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.programscreen);
+
+        /*
+        Initialize Variables and link Objects to layout
+         */
+
         forward = (TextView) findViewById(R.id.forward);
         right = (TextView) findViewById(R.id.right);
         left = (TextView) findViewById(R.id.left);
@@ -47,22 +55,26 @@ public class ProgramScreen extends Activity {
         Setup();
     }
 
-    private void Setup(){//needs work
+    private void Setup(){
 
 
 
         /*
-        deletion on tap
+        Deletion on tap
         */
         CodeArea.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String toDelete = myAdapter.getItem(position);
                 myAdapter.remove(toDelete);
-                myAdapter.add("");
+                myAdapter.add("");//keep buffer
                 myAdapter.notifyDataSetChanged();
             }
         });
+
+        /*
+        Add Long click to rearrange
+         */
 
         CodeArea.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -71,7 +83,7 @@ public class ProgramScreen extends Activity {
                 ClipData data = ClipData.newPlainText(toDelete,"");
                 System.out.println("DRAGGED VIEW ID: "+toDelete);
                 myAdapter.remove(toDelete);
-                myAdapter.add("");
+                myAdapter.add("");//keep buffer
                 myAdapter.notifyDataSetChanged();
 
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
@@ -83,14 +95,20 @@ public class ProgramScreen extends Activity {
 
 
         /*
-        set drag listener on text views
+        Set touch drag listener on text views
          */
         forward.setOnTouchListener(new ChoiceTouch());
         right.setOnTouchListener(new ChoiceTouch());
         left.setOnTouchListener(new ChoiceTouch());
 
-
+        /*
+        Set Drag listener on The CodeArea(ListView)
+         */
         CodeArea.setOnDragListener(new ChoiceDrag());
+
+        /*
+        Add Buffer to Coding Area
+         */
 
         for(int i = 0;i<10;i++){//used to add code slots so each thing can be addressed
             myAdapter.add("");
@@ -99,16 +117,20 @@ public class ProgramScreen extends Activity {
 
     }
 
+    /*
+    Handles adding and rearranging Items to CodeArea(ListView)
+     */
 
-    public void addCommand(String command,int x,int y){//almost at rearragingin point still buggy
-        System.out.println("Got X:"+x);//WHY IS THIS ZERO NO MATTER WHAT
+    public void addCommand(String command,int x,int y){
+        System.out.println("Got X:"+x);
         System.out.println("Got Y:"+y);
         System.out.println("Got From Sub Class: "+command);
 
         int position = CodeArea.pointToPosition(x,y);
 
         System.out.println("Dragged to: "+(position+1));
-        Code.set(position, command);//change to position of dropped item
+
+        Code.set(position, command);
         myAdapter.notifyDataSetChanged();
 
 
