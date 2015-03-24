@@ -2,13 +2,11 @@ package com.mabez.ROBOT_APP;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 
 import java.util.ArrayList;
 
@@ -23,11 +21,13 @@ import java.util.ArrayList;
 public class ProgramScreen extends Activity {
 
     private TextView forward,right,left,loop;
+    private Button SubmitButton;
     private static ListView CodeArea;
     private static ArrayAdapter<String> myAdapter;
     private static ArrayList<String> Code = new ArrayList<String>();
     private View.OnDragListener myDrag;
     private static ArrayList<View> Items;
+
 
 
 
@@ -39,7 +39,7 @@ public class ProgramScreen extends Activity {
         /*
         Initialize Variables and link Objects to layout
          */
-
+        SubmitButton = (Button)findViewById(R.id.SubmitButton);
         forward = (TextView) findViewById(R.id.forward);
         right = (TextView) findViewById(R.id.right);
         left = (TextView) findViewById(R.id.left);
@@ -49,7 +49,7 @@ public class ProgramScreen extends Activity {
         Items = new ArrayList<View>();
 
 
-        myAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,Code);
+        myAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,Code);//add custom layout down the line
         CodeArea.setAdapter(myAdapter);
 
         Setup();
@@ -126,6 +126,19 @@ public class ProgramScreen extends Activity {
             myAdapter.add("");
             myAdapter.notifyDataSetChanged();
         }
+
+        /*
+        Add Click Listener for button
+         */
+
+        SubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent GoToProcessing = new Intent(ProgramScreen.this,Processing.class);
+                GoToProcessing.putStringArrayListExtra("codearray",Code);//send codes through to processing
+                startActivityForResult(GoToProcessing,0);//FIND OUT HOW TO USE THIS
+            }
+        });
 
     }
 
