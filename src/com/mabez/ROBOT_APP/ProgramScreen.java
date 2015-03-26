@@ -1,12 +1,12 @@
 package com.mabez.ROBOT_APP;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.DragEvent;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 
 import java.util.ArrayList;
@@ -31,6 +31,8 @@ public class ProgramScreen extends Activity {
 
     private static final int PROCESS_OK = 1;
 
+    private ActionBar myBar;
+
 
 
 
@@ -38,6 +40,11 @@ public class ProgramScreen extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.programscreen);
+
+        //myBar = getActionBar();
+
+
+
 
         /*
         Initialize Variables and link Objects to layout
@@ -56,6 +63,28 @@ public class ProgramScreen extends Activity {
         CodeArea.setAdapter(myAdapter);
 
         Setup();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.myactionbar, menu);
+        return true;
+    }
+
+    /**
+     * On selecting action bar icons
+     * */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                System.out.println("Tapped Icon");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void Setup(){
