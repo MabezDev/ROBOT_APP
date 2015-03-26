@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.*;
@@ -27,6 +28,8 @@ public class ProgramScreen extends Activity {
     private static ArrayList<String> Code = new ArrayList<String>();
     private View.OnDragListener myDrag;
     private static ArrayList<View> Items;
+
+    private static final int PROCESS_OK = 1;
 
 
 
@@ -136,10 +139,26 @@ public class ProgramScreen extends Activity {
             public void onClick(View v) {
                 Intent GoToProcessing = new Intent(ProgramScreen.this,Processing.class);
                 GoToProcessing.putStringArrayListExtra("codearray",Code);//send codes through to processing
-                startActivityForResult(GoToProcessing,0);//FIND OUT HOW TO USE THIS
+                startActivityForResult(GoToProcessing,PROCESS_OK);//FIND OUT HOW TO USE THIS
             }
         });
 
+    }
+    /*
+    Find out if the sound algorithm was played or not
+     */
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == PROCESS_OK) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                System.out.println("Result Okay");
+
+                // Do something with the contact here (bigger example below)
+            }
+        }
     }
 
     /*
